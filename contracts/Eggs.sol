@@ -13,8 +13,8 @@ contract Eggs is ERC721Enumerable,Ownable{
     IWhitelist WLVoucher;
     IERC20 Grav;
 
-    uint[2] public PRICE = [50 ether,2000 ether];
-    uint[2] public WLPRICE = [25 ether,1000 ether];
+    uint[2] public PRICE = [1 ether,2000 ether];
+    uint[2] public WLPRICE = [1 ether,1000 ether];
 
     bool public freeMintActive;
     bool public wlMintActive;
@@ -99,6 +99,15 @@ contract Eggs is ERC721Enumerable,Ownable{
 
     function setPublicMintActive(bool _active) external onlyOwner{
         publicMintActive = _active;
+    }
+
+    function withdraw() external onlyOwner{
+        (bool sent,) = payable(owner()).call{value:address(this).balance}("");
+        require(sent,"Transfer failed");
+    }
+
+    function withdrawToken() external onlyOwner{
+        Grav.transfer(owner(),Grav.balanceOf(address(this)));
     }
 
 }
