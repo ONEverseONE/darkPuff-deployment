@@ -15,8 +15,8 @@ contract Eggs is ERC721Enumerable,Ownable{
     IVoucherIncubators VoucherIncubators;
     IERC20 Grav;
 
-    uint[2] public PRICE = [1 ether,2000 ether];
-    uint[2] public WLPRICE = [1 ether,1000 ether];
+    uint[2] public PRICE = [50 ether,1000 ether];
+    uint[2] public WLPRICE = [40 ether,750 ether];
 
     bool public freeMintActive;
     bool public wlMintActive;

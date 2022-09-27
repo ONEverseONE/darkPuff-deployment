@@ -3,10 +3,7 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const { ethers } = require("hardhat");
 const hre = require("hardhat");
-const fs = require("fs");
-const { parseEther } = require("ethers/lib/utils");
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -51,9 +48,8 @@ async function main() {
   await egg.setPublicMintActive(true);
   await egg.setWLMintActive(true);
 
-  await egg.deployTransaction.wait(5);
-
   console.log("Eggs deployed to:", egg.address);
+  await egg.deployTransaction.wait(5);
 
   try {
     await hre.run("verify:verify", {
@@ -61,16 +57,20 @@ async function main() {
       contract: "contracts/Mocks/FreeMintVoucher.sol:FreeMintVoucher",
       network: "mumbai",
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 
   try {
     await hre.run("verify:verify", {
       address: voucher.address,
-      constructorArguments: [grav.address],
+      constructorArguments: [fmv.address],
       contract: "contracts/VoucherIncubator.sol:VoucherIncubator",
       network: "mumbai",
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 
   try {
     await hre.run("verify:verify", {
@@ -78,7 +78,9 @@ async function main() {
       contract: "contracts/Mocks/Grav.sol:Grav",
       network: "mumbai",
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 
   try {
     await hre.run("verify:verify", {
@@ -87,16 +89,25 @@ async function main() {
       contract: "contracts/Mocks/WhitelistVoucher.sol:WhitelistVoucher",
       network: "mumbai",
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 
   try {
     await hre.run("verify:verify", {
       address: egg.address,
-      constructorArguments: [fmv.address, wl.address, grav.address],
+      constructorArguments: [
+        fmv.address,
+        wl.address,
+        grav.address,
+        voucher.address,
+      ],
       contract: "contracts/Eggs.sol:Eggs",
       network: "mumbai",
     });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere

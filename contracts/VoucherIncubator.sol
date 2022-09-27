@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.14;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -129,8 +129,8 @@ contract VoucherIncubator is ERC721Enumerable, Ownable {
                         eggsRedeemable,
                         '}, { "display_type" : "Date" ,"trait_type": "Issuance Date", "value": ',
                         dateofcreation,
-                        '}, ',
-                        "} ]}"
+                        '} ',
+                        "]}"
                     )
                 )
             )
