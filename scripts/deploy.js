@@ -5,13 +5,13 @@ async function main() {
   // const grav = await GRAV.deploy();
   // console.log("Grav deployed to:", grav.address);
 
-  const Egg = await hre.ethers.getContractFactory("Puffs");
-  const egg = await Egg.deploy("0xC6baB722a7049B3363C4A7b76cf78B3beb6483c2");
+  const Puff = await hre.ethers.getContractFactory("Puffs");
+  const puff = await Puff.deploy("0xC6baB722a7049B3363C4A7b76cf78B3beb6483c2");
 
-  await egg.setFreeMintActive(true);
+  await puff.setPublicMintActive(true);
 
-  console.log("Eggs deployed to:", egg.address);
-  await egg.deployTransaction.wait(5);
+  console.log("Dark Puff Mint deployed to:", puff.address);
+  await puff.deployTransaction.wait(5);
   /*
 
   try {
